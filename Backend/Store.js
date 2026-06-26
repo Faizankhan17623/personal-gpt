@@ -62,7 +62,6 @@ export async function initStore() {
   // newest first
   sessions.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
   cache.set(SESSIONS_KEY, sessions);
-  console.log(`Store loaded ${sessions.length} chat session(s).`);
 }
 
 function getSessions() {

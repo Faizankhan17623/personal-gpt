@@ -1,13 +1,10 @@
 node_modules/
 
-# Secrets — never commit
 .env
 *.env
 !.env.example
 
-# Runtime data (per-machine chats and uploaded files)
 data/
 uploads/
 
-# Logs
 *.log

@@ -108,14 +108,6 @@ Open the frontend URL, click **New chat**, and start talking. To use RAG, click 
 
 ---
 
-## ⚠️ Notes
-
-- **Never commit your `.env`** — it holds your API keys. It is git-ignored; use
-  `.env.example` as the template.
-- `Backend/data/` and `Backend/uploads/` are local runtime folders and are git-ignored.
-
----
-
 ## 📦 Deploying to Production
 
 - **Frontend**: build with `npm run build` (output in `Frontend/dist/`) and host on any

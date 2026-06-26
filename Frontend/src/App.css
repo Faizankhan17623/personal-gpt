@@ -239,6 +239,21 @@
   padding: 0;
 }
 
+/* blinking caret while the answer types out */
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--text);
+  border-radius: 1px;
+  animation: caret-blink 1s steps(2, start) infinite;
+}
+@keyframes caret-blink {
+  to { opacity: 0; }
+}
+
 /* typing dots */
 .typing {
   display: inline-flex;

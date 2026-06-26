@@ -10,6 +10,7 @@ import {
   streamError,
 } from "../store/chatSlice";
 import { streamChat } from "../api";
+import { createTypewriter } from "../typewriter";
 
 export default function Composer() {
   const dispatch = useDispatch();
@@ -36,11 +37,21 @@ export default function Composer() {
     dispatch(pushUserMessage(message));
     dispatch(startAssistantMessage());
 
+    // Smooth the bursty network tokens into a steady "typing" effect.
+    const typer = createTypewriter((chunk) => dispatch(appendToken(chunk)));
+    let donePayload = null;
+
     await streamChat(id, message, {
-      onToken: (t) => dispatch(appendToken(t)),
-      onDone: (payload) => dispatch(finishAssistantMessage(payload)),
+      onToken: (t) => typer.push(t),
+      onDone: (payload) => {
+        donePayload = payload;
+      },
       onError: (err) => dispatch(streamError(err.message)),
     });
+
+    // Let the typewriter finish revealing everything, then mark done.
+    await typer.flush();
+    if (donePayload) dispatch(finishAssistantMessage(donePayload));
   };
 
   const handleKeyDown = (e) => {

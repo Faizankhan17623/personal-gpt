@@ -42,17 +42,27 @@ export default function ChatWindow() {
           <Welcome />
         ) : (
           <div className="messages">
-            {messages.map((m) => (
+            {messages.map((m, i) => {
+              const isLast = i === messages.length - 1;
+              const isStreamingThis =
+                m.role === "assistant" && streaming && isLast;
+              return (
               <div key={m.id} className={`msg ${m.role}`}>
                 <div className="bubble">
                   {m.role === "assistant" && !m.content && streaming ? (
                     <TypingDots />
                   ) : (
-                    <ReactMarkdown>{m.content}</ReactMarkdown>
+                    <>
+                      <ReactMarkdown>{m.content}</ReactMarkdown>
+                      {isStreamingThis && m.content && (
+                        <span className="caret" />
+                      )}
+                    </>
                   )}
                 </div>
               </div>
-            ))}
+              );
+            })}
             <div ref={endRef} />
           </div>
         )}

@@ -1,5 +1,7 @@
 // Thin API client for the RAG backend.
-const BASE = "http://localhost:4000/api";
+// The backend URL comes from a Vite env var (VITE_API_URL) so it can differ
+// between local development and production. Falls back to localhost for dev.
+const BASE = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
 
 export async function listSessions() {
   const r = await fetch(`${BASE}/sessions`);
